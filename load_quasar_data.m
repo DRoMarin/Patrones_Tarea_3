@@ -48,3 +48,29 @@ figure(1);
   hold on;
   plot(lambdas,X*theta,"b","linewidth",2);
 
+
+
+figure(2);
+hold on;
+
+xpon = [ones(rows(lambdas),1),lambdas(:,1)];
+ypon = train_qso(1,:)';
+plot(xpon,ypon,"*");
+tau=5;
+yar=[];  
+    for xite = xpon'      
+        w = exp(-(xpon(:,2)-xite(2,1)).^2/(2*tau^2));
+        W = diag(w, 0);
+        theta = inv(xpon' * W * xpon) * xpon' * W * ypon;
+        yar = [yar theta'*xite];
+    end
+yp2 = yar';
+plot(xpon, yp2,'g', 'linewidth', 3);
+hold on;
+xlabel('Lambdas (Angstrom (Å))');
+ylabel('Flujo de Espectra');
+hold off;
+
+
+
+
